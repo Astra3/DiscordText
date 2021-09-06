@@ -1,10 +1,10 @@
-#!/home/roman/PycharmProjects/DiscordText/venv/bin/python3
-# EASY-INSTALL-ENTRY-SCRIPT: 'click-test==0.1.0','console_scripts','disc'
+#!/home/roman/PycharmProjects/DiscordText/venv/bin/python
+# EASY-INSTALL-ENTRY-SCRIPT: 'click-test','console_scripts','disc'
 import re
 import sys
 
 # for compatibility with easy_install; see #2198
-__requires__ = 'click-test==0.1.0'
+__requires__ = 'click-test'
 
 try:
     from importlib.metadata import distribution
@@ -30,4 +30,4 @@ globals().setdefault('load_entry_point', importlib_load_entry_point)
 
 if __name__ == '__main__':
     sys.argv[0] = re.sub(r'(-script\.pyw?|\.exe)?$', '', sys.argv[0])
-    sys.exit(load_entry_point('click-test==0.1.0', 'console_scripts', 'disc')())
+    sys.exit(load_entry_point('click-test', 'console_scripts', 'disc')())

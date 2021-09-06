@@ -1,3 +1,5 @@
+# run pip install --editable . for installation
+# add eval "$(_DISC_COMPLETE=bash_source disc)" disc to .bashrc for auto-complete
 from typing import Union, List, Tuple
 
 from TextEdit import TextEdit
@@ -27,12 +29,12 @@ def spoiler():
 
 
 @cli.command()
-@click.option("--char-space", "-C", help="space between chars", default=1, type=int)
-@click.option("--space-size", "-s", help="amount of space between words", default=3, type=int)
-@click.option("--diacritics", "-d", help="removes diacritics", is_flag=True)
-def emojify(char_space, space_size):
+@click.option("--char-space", "-C", help="space between chars, default 1", default=1, type=int)
+@click.option("--space-size", "-s", help="amount of space between words, default 3", default=3, type=int)
+@click.option("--no-diacritics", "-d", help="removes diacritics", is_flag=True)
+def emojify(char_space, space_size, no_diacritics):
     """turns every char and number into emoji character, has optional parameters"""
-    end(TextEdit.emojify(inp(), char_space, space_size), True)
+    end(TextEdit.emojify(inp(), char_space, space_size, not no_diacritics), True)
 
 
 @cli.command()
@@ -42,11 +44,15 @@ def reverse():
 
 
 @cli.command()
-@click.option("--max-num", "-M", help="maximum character space between lower and upper case", default=3, type=int)
-@click.option("--min-num", "-m", help="minimal character space between lower and upper case", default=2, type=int)
+@click.option("--max-num", "-M", help="maximum character space between lower and upper case, default 3", default=3, type=int)
+@click.option("--min-num", "-m", help="minimal character space between lower and upper case, default 2", default=2, type=int)
 def varied(min_num, max_num):
     """varies the chars with lower and upper case, has optional parameters"""
-    end(TextEdit.varied(inp(), min_num, max_num))
+    try:
+        end(TextEdit.varied(inp(), min_num, max_num))
+    except ValueError:
+        print("min-num must be lower than max-num")
+        exit()
 
 
 def inp() -> str:
@@ -69,16 +75,17 @@ def end(text: Union[Tuple[str, List[str]], str], emojify_trigger=False):
         """
         global _no_copy
         if _no_copy:
-            pyperclip.copy(a)
-        else:
             print(a)
+        else:
+            pyperclip.copy(a)
+            print("Copied to clipboard!")
 
     if emojify_trigger:
         copy(text[0])
         if text[1]:
             fail = ""
             for i in text[1]:
-                fail += i
+                fail += i + ""
             print(f"Some chars could not be converted: {fail}")
     else:
         copy(text)

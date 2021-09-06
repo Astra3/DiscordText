@@ -29,24 +29,23 @@ class TextEdit:
         """
         text = text.lower()
         if diakritika:
-            # níže zmíněný slovník je k odstranění diakritiky
+            # this dictionary removes diacritics
             preklad = str.maketrans("áéíóúýčďěňřšťžů",
                                     "aeiouycdenrstzu")
             text = text.translate(preklad)
         b = ""
         znaky = []
         for i in text:
-            if i == " ":  # mezera se nahrazuje za 3 mezery pro lepší čitelnost
+            if i == " ":  # space is replaced for better readability
                 b += space_size * " "
             elif i.isnumeric():  # jde o číslo
                 b += i + chr(0x20e3) + char_space * " "
-            elif i.isascii():  # znamená, že se jedná o znak abecedy
-                b += chr(ord(i) + 127365) + char_space * " "  # posun o 127365 vypíše emoji verzi písmene
-            else:  # znaky co nejsou písmena se zaznamenávají do pole
+            elif i.isalpha() and i.isascii():  # means alphabetic char
+                b += chr(ord(i) + 127365) + char_space * " "  # adding 127365 outputs emoji version
+            else:  # chars that aren't numbers nor letters are saved here
                 b += i
                 znaky.append(i)
 
-        b = b[:-1]
         return b, znaky
 
     @staticmethod
@@ -58,10 +57,11 @@ class TextEdit:
         :param min_num: minimal character space between lower and upper case
         :param max_num: maximum character space between lower and upper case
         :return: text with varied text
+        :raises ValueError: if min_num is larger than max_num
         """
         b = ""
         rand = 0
-        # program cyklí přes text a přes proměnou rand ukládá mezeru mezi znaky, po každém velkém písmenu se rand resetuje
+        # script cycles through text and saves char space in rand variable, resets after every uppercase letter
         for i in text:
             if not i.isalpha():
                 b += i
