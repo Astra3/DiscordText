@@ -93,3 +93,4 @@ def end(text: Union[Tuple[str, List[str]], str], emojify_trigger=False):
 
 if __name__ == '__main__':
     cli()
+    # FIXME auto-completion does not work properly, maybe ask on StackOverflow
