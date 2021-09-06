@@ -1,7 +1,7 @@
 # run pip install --editable . for installation
 # add eval "$(_DISC_COMPLETE=bash_source disc)" disc to .bashrc for auto-complete
 from typing import Union, List, Tuple
-
+from AliasedGroup import AliasedGroup
 from TextEdit import TextEdit
 import pyperclip
 import click
@@ -10,12 +10,12 @@ _copy = bool()
 _no_copy = bool()
 
 
-@click.group()
+@click.group(cls=AliasedGroup)
 @click.option("--copy", "-c", is_flag=True, help="pastes the input from clipboard")
 @click.option("--no-copy", "-n", is_flag=True, help="writes the output instead of copying it")
 def cli(no_copy: bool, copy: bool):
     """
-    This script is used for some text edits useful for Discord.
+    This script is used for some text edits useful for Discord. You can use aliases for command names.
     """
     global _copy, _no_copy
     _copy = copy
