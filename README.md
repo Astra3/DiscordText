@@ -1,5 +1,7 @@
 # Discord Text Edits
 
+---
+
 This python script allows you to do basic edits for input text
 shown here:
 * emojify - aka replaces chars with their emoji counterparts
@@ -14,6 +16,6 @@ Because similar effects can be achieved in markdown, here are examples:
 --- | ---
 |emojify|🇪 🇲 🇴 🇯 🇮 🇫 🇾 |
 |reverse|esrever|
-|spoiler|spoiler?|
+|spoiler|\|\|s\|\|\|\|p\|\|\|\|o\|\|\|\|i\|\|\|\|l\|\|\|\|e\|\|\|\|r\|\||
 |varied|VaRieD|
 
